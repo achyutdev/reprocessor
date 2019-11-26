@@ -34,7 +34,7 @@ public class ReprocessorServiceImpl implements ReprocessorService {
     }
 
     @Override
-    public <T, O> void processEvents(List<T> events, O field) {
+    public <T, O> void processEvents(List<T> events, final O field) {
         List<T> myEventList = getMyEventList(events);
     }
 
@@ -51,12 +51,18 @@ public class ReprocessorServiceImpl implements ReprocessorService {
 
     private <T> boolean isEventMine(T event) {
         int myNumber = getMyNumber();
+
+
         int totalThreads = threadPoolSize * totalInstances;
-        return Math.abs() % totalThreads == myNumber;
+        return Math.abs("".hashCode()) % totalThreads == myNumber;
     }
 
     private int getMyNumber() {
         int threadNumber = Integer.parseInt(Thread.currentThread().getName().split("-")[1]);
         return currentInstanceIndex*threadPoolSize + threadNumber;
+    }
+
+    private int getFieldValue(String field){
+        return Math.abs(field.hashCode());
     }
 }
